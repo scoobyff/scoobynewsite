@@ -1,0 +1,45 @@
+[
+    {
+        "category": "Bein Sports",
+        "categoryImage": "images/bein-logo.png",
+        "streams": [
+            {
+                "name": "Bein Sports 1 HD",
+                "url": "https://bein1.example.com",
+                "image": "images/bein1.png"
+            },
+            {
+                "name": "Bein Sports 2 HD",
+                "url": "https://bein2.example.com",
+                "image": "images/bein2.png"
+            }
+        ]
+    },
+    {
+        "category": "Star Sports",
+        "categoryImage": "images/star-logo.png",
+        "streams": [
+            {
+                "name": "Star Sports 1 HD",
+                "url": "https://starsports1.example.com",
+                "image": "images/ss1.png"
+            },
+            {
+                "name": "Star Sports 2 HD",
+                "url": "https://starsports2.example.com",
+                "image": "images/ss2.png"
+            }
+        ]
+    },
+    {
+        "category": "Ten Sports",
+        "categoryImage": "images/ten-logo.png",
+        "streams": [
+            {
+                "name": "Ten Sports 1 HD",
+                "url": "https://ten1.example.com",
+                "image": "images/ten1.png"
+            }
+        ]
+    }
+]
