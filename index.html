@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Scooby Streaming Hub - Categories</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Welcome Popup -->
+<div class="popup-overlay" id="welcome-popup">
+    <div class="popup-content">
+        <h2 class="popup-title">WELCOME TO SCOOBY CRICKET HUB</h2>
+        <p>Enter your name to access premium streams</p>
+        <input type="text" id="user-name" class="popup-input" placeholder="Your Name" autocomplete="off"/>
+        <button class="popup-button" onclick="submitUserName()">ENTER</button>
+        <p class="popup-welcome-msg">Experience the best streaming quality!</p>
+    </div>
+</div>
+
+<header>
+    <h1>Scooby Streaming Hub</h1>
+    <div>
+        <span id="current-time"></span>
+        <span class="welcome-user" id="welcome-message"></span>
+    </div>
+</header>
+
+<h2 class="section-title">Choose a Category</h2>
+<div id="categories-container"></div>
+
+<script src="telegram.js"></script>
+<script>
+// Load categories from JSON
+fetch('streams.json')
+    .then(res => res.json())
+    .then(data => {
+        const catContainer = document.getElementById('categories-container');
+        data.forEach(category => {
+            const catDiv = document.createElement('div');
+            catDiv.className = 'category-btn';
+            catDiv.innerHTML = `
+                <img src="${category.categoryImage}" alt="${category.category}" class="category-logo">
+                <span>${category.category}</span>
+            `;
+            catDiv.onclick = () => {
+                window.location.href = `category.html?cat=${encodeURIComponent(category.category)}`;
+            };
+            catContainer.appendChild(catDiv);
+        });
+    });
+
+// Show current time live
+setInterval(() => {
+    document.getElementById('current-time').textContent = getIndianTime();
+}, 1000);
+</script>
+
+</body>
+</html>
