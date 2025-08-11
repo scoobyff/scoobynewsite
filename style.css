@@ -31,6 +31,122 @@ h1 {
     text-shadow: var(--neon-glow);
 }
 
+.popup-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: #111;
+    border: 2px solid var(--neon-primary);
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--neon-glow);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.popup-input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid var(--neon-primary);
+    background: black;
+    color: white;
+}
+
+.popup-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: var(--neon-primary);
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.popup-button:hover {
+    background: var(--neon-secondary);
+    color: white;
+}
+
+/* Ad space */
+.ad-space {
+    text-align: center;
+    margin: 10px 0;
+    position: relative;
+}
+.ad-label {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    background: var(--neon-secondary);
+    padding: 2px 5px;
+    font-size: 10px;
+}
+
+/* Broadcast box */
+.broadcast-container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--neon-blue);
+    padding: 10px;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: var(--neon-glow-blue);
+}
+
+.broadcast-title {
+    margin: 0;
+    color: var(--neon-blue);
+}
+
+.broadcast-message {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Watch time */
+.watch-time-container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.watch-time-label {
+    font-size: 14px;
+    color: var(--neon-secondary);
+}
+
+.watch-time-value {
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: var(--neon-glow-secondary);
+}
+
+/* Help section */
+.help-section {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    margin: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--neon-primary);
+}
+.help-section textarea {
+    width: 100%;
+    height: 80px;
+    margin: 10px 0;
+    background: black;
+    color: white;
+    border: 1px solid var(--neon-primary);
+}
+
 /* Category grid */
 #categories-container {
     display: grid;
@@ -47,10 +163,10 @@ h1 {
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s;
+    box-shadow: var(--neon-glow);
 }
 
 .category-btn:hover {
-    box-shadow: var(--neon-glow);
     transform: translateY(-3px);
 }
 
@@ -76,10 +192,10 @@ h1 {
     padding: 10px;
     text-align: center;
     transition: all 0.3s;
+    box-shadow: var(--neon-glow-secondary);
 }
 
 .stream-card:hover {
-    box-shadow: var(--neon-glow-secondary);
     transform: translateY(-3px);
 }
 
@@ -89,6 +205,7 @@ h1 {
     object-fit: contain;
     margin-bottom: 8px;
 }
+
 /* Back Button Styling */
 .back-btn {
     background: none;
