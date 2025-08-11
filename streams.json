@@ -17,7 +17,7 @@
     },
     {
         "category": "Star Sports",
-        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten3_HD.png
+        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten3_HD.png"
         "streams": [
             {
                 "name": "Star Sports 1 HD",
@@ -33,7 +33,7 @@
     },
     {
         "category": "Ten Sports",
-        "categoryImage": "images/ten-logo.png",
+        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten_4_Telugu.png",
         "streams": [
             {
                 "name": "Ten Sports 1 HD",
