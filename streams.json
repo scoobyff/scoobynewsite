@@ -1,23 +1,23 @@
 [
     {
         "category": "Bein Sports",
-        "categoryImage": "images/bein-logo.png",
+        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten_4_HD_Tamil.png",
         "streams": [
             {
                 "name": "Bein Sports 1 HD",
                 "url": "https://bein1.example.com",
-                "image": "images/bein1.png"
+                "image": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten3_HD.png"
             },
             {
                 "name": "Bein Sports 2 HD",
                 "url": "https://bein2.example.com",
-                "image": "images/bein2.png"
+                "image": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten_4_HD_Telugu.png"
             }
         ]
     },
     {
         "category": "Star Sports",
-        "categoryImage": "images/star-logo.png",
+        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten3_HD.png
         "streams": [
             {
                 "name": "Star Sports 1 HD",
