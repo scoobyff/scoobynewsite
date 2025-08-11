@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Scooby Streaming Hub - Streams</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -13,22 +13,68 @@
     <div class="popup-content">
         <h2 class="popup-title">WELCOME TO SCOOBY CRICKET HUB</h2>
         <p>Enter your name to access premium streams</p>
-        <input type="text" id="user-name" class="popup-input" placeholder="Your Name" autocomplete="off"/>
+        <input autocomplete="off" class="popup-input" id="user-name" placeholder="Your Name" type="text"/>
         <button class="popup-button" onclick="submitUserName()">ENTER</button>
         <p class="popup-welcome-msg">Experience the best streaming quality!</p>
     </div>
 </div>
 
-<header>
-    <h1>Scooby Streaming Hub</h1>
-    <div>
-        <span id="current-time"></span>
-        <span class="welcome-user" id="welcome-message"></span>
+<div class="container" id="main-content">
+    <!-- Top Ad Space -->
+    <div class="ad-space" id="top-ad">
+        <span class="ad-label">AD</span>
+        <a href="https://t.me/+u8PDYVT92MA3MTg9" onclick="trackAdClick('top-ad')" target="_blank">
+            <img alt="Advertisement" src="https://i.postimg.cc/D4FJcKPY/images.png"/>
+        </a>
     </div>
-</header>
 
-<h2 class="section-title" id="category-title"></h2>
-<div id="streams-container"></div>
+    <header>
+        <button onclick="window.location.href='index.html'" style="background:none;border:none;color:white;font-size:24px;cursor:pointer;">⬅</button>
+        <h1 id="category-title"></h1>
+        <div>
+            <span id="current-time"></span>
+            <span class="welcome-user" id="welcome-message"></span>
+        </div>
+    </header>
+
+    <!-- Broadcast Message Section -->
+    <div class="broadcast-container" id="broadcast-container">
+        <h3 class="broadcast-title">Broadcast Message</h3>
+        <p class="broadcast-message" id="broadcast-message"></p>
+    </div>
+
+    <div class="watch-time-container">
+        <div class="watch-time-label">YOUR WATCH TIME</div>
+        <div class="watch-time-value" id="watch-time">00:00:00</div>
+    </div>
+
+    <!-- Middle Ad Space -->
+    <div class="ad-space" id="middle-ad">
+        <span class="ad-label">SPONSOR</span>
+        <a href="https://t.me/+u8PDYVT92MA3MTg9" onclick="trackAdClick('middle-ad')" target="_blank">
+            <img alt="Sponsor Advertisement" src="https://i.postimg.cc/D4FJcKPY/images.png"/>
+        </a>
+    </div>
+
+    <!-- Streams -->
+    <div id="streams-container"></div>
+
+    <!-- Help Section -->
+    <div class="help-section">
+        <h3>Need Help?</h3>
+        <p>If you're experiencing any issues with the streams or have questions, send us a message below:</p>
+        <textarea id="help-message" placeholder="Describe your issue or ask a question..."></textarea>
+        <button onclick="sendHelpMessage()">SEND MESSAGE</button>
+    </div>
+
+    <!-- Bottom Ad Space -->
+    <div class="ad-space" id="bottom-ad">
+        <span class="ad-label">AD</span>
+        <a href="https://t.me/+u8PDYVT92MA3MTg9" onclick="trackAdClick('bottom-ad')" target="_blank">
+            <img alt="Advertisement" src="https://i.postimg.cc/D4FJcKPY/images.png"/>
+        </a>
+    </div>
+</div>
 
 <script src="telegram.js"></script>
 <script>
@@ -42,12 +88,13 @@ fetch('streams.json')
     .then(res => res.json())
     .then(data => {
         const category = data.find(cat => cat.category === selectedCategory);
+        const streamsContainer = document.getElementById('streams-container');
+
         if (!category) {
-            document.getElementById('streams-container').innerHTML = "<p>No streams found for this category.</p>";
+            streamsContainer.innerHTML = "<p>No streams found for this category.</p>";
             return;
         }
 
-        const streamsContainer = document.getElementById('streams-container');
         category.streams.forEach(stream => {
             const streamDiv = document.createElement('a');
             streamDiv.href = stream.url;
@@ -62,9 +109,19 @@ fetch('streams.json')
         });
     });
 
-// Show current time live
+// Live clock
 setInterval(() => {
     document.getElementById('current-time').textContent = getIndianTime();
+}, 1000);
+
+// Watch time tracking
+let watchSeconds = 0;
+setInterval(() => {
+    watchSeconds++;
+    const hrs = String(Math.floor(watchSeconds / 3600)).padStart(2, '0');
+    const mins = String(Math.floor((watchSeconds % 3600) / 60)).padStart(2, '0');
+    const secs = String(watchSeconds % 60).padStart(2, '0');
+    document.getElementById('watch-time').textContent = `${hrs}:${mins}:${secs}`;
 }, 1000);
 </script>
 
