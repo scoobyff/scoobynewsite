@@ -106,4 +106,6 @@ const externalStreams = [
                 logo: "https://i.postimg.cc/c4pL4Ztf/sony-ten-1-logo.png",
                 externalUrl: "https://scoobystreams.vercel.app/sonysports.html?c=sonyten1hd"
             }
-]
+        ]
+    }
+];
