@@ -1,128 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Scooby Streaming Hub</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scooby Streaming Hub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- Welcome Popup -->
-<div class="popup-overlay" id="welcome-popup">
-    <div class="popup-content">
-        <h2 class="popup-title">WELCOME TO SCOOBY CRICKET HUB</h2>
-        <p>Enter your name to access premium streams</p>
-        <input autocomplete="off" class="popup-input" id="user-name" placeholder="Your Name" type="text"/>
-        <button class="popup-button" onclick="submitUserName()">ENTER</button>
-        <p class="popup-welcome-msg">Experience the best streaming quality!</p>
-    </div>
-</div>
-
-<!-- Maintenance Popup -->
-<div class="popup-overlay" id="maintenance-popup" style="display:none;">
-    <div class="popup-content">
-        <h2 class="popup-title">SERVER IN MAINTENANCE TO BE AVAILABLE SOON</h2>
-        <div class="maintenance-icon">🛠️</div>
-        <p>We're currently improving our streaming services to provide you with a better experience.</p>
-        <p>Expected to be back at 6:30 PM IST.</p>
-        <p class="popup-welcome-msg" id="maintenance-time-popup"></p>
-    </div>
-</div>
-
-<div class="container" id="main-content">
-    <!-- Top Ad Space -->
-    <div class="ad-space" id="top-ad">
-        <span class="ad-label">AD</span>
-        <a href="https://t.me/+u8PDYVT92MA3MTg9" onclick="trackAdClick('top-ad')" target="_blank">
-            <img alt="Advertisement" src="https://i.postimg.cc/D4FJcKPY/images.png"/>
-        </a>
-    </div>
-
-    <header>
-        <h1>Scooby Streaming Hub</h1>
-        <div>
-            <span id="current-time"></span>
-            <span class="welcome-user" id="welcome-message"></span>
+    <!-- Welcome Popup -->
+    <div class="popup-overlay" id="welcome-popup">
+        <div class="popup-content">
+            <h2 class="popup-title">WELCOME TO SCOOBY CRICKET HUB </h2>
+            <p>Enter your name to access premium streams</p>
+            <input type="text" id="user-name" class="popup-input" placeholder="Your Name" autocomplete="off">
+            <button class="popup-button" onclick="submitUserName()">ENTER</button>
+            <p class="popup-welcome-msg">Experience the best streaming quality!</p>
         </div>
-    </header>
-
-    <!-- Broadcast Message Section -->
-    <div class="broadcast-container" id="broadcast-container">
-        <h3 class="broadcast-title">Broadcast Message</h3>
-        <p class="broadcast-message" id="broadcast-message"></p>
     </div>
 
-    <div class="watch-time-container">
-        <div class="watch-time-label">YOUR WATCH TIME</div>
-        <div class="watch-time-value" id="watch-time">00:00:00</div>
+    <!-- Maintenance Popup -->
+    <div class="popup-overlay" id="maintenance-popup">
+        <div class="popup-content">
+            <h2 class="popup-title"> SERVER IN MAINTENANCE TO BE AVAILABLE SOON </h2>
+            <div class="maintenance-icon">🛠️</div>
+            <p>We're currently improving our streaming services to provide you with a better experience.</p>
+            <p>Expected to be back at 6:30 PM IST.</p>
+            <p id="maintenance-time-popup" class="popup-welcome-msg"></p>
+        </div>
     </div>
 
-    <!-- Middle Ad Space -->
-    <div class="ad-space" id="middle-ad">
-        <span class="ad-label">SPONSOR</span>
-        <a href="https://t.me/+u8PDYVT92MA3MTg9" onclick="trackAdClick('middle-ad')" target="_blank">
-            <img alt="Sponsor Advertisement" src="https://i.postimg.cc/D4FJcKPY/images.png"/>
-        </a>
+    <div class="container" id="main-content">
+        <!-- Top Ad Space -->
+        <div class="ad-space" id="top-ad">
+            <span class="ad-label">AD</span>
+            <a href="https://t.me/+u8PDYVT92MA3MTg9" target="_blank" onclick="trackAdClick('top-ad')">
+                <img src="https://i.postimg.cc/D4FJcKPY/images.png" alt="Advertisement" />
+            </a>
+        </div>
+        
+        <header>
+            <h1>Scooby Streaming Hub</h1>
+            <div>
+                <span id="current-time"></span>
+                <span id="welcome-message" class="welcome-user"></span>
+            </div>
+        </header>
+        
+        <!-- Broadcast Message Section -->
+        <div class="broadcast-container" id="broadcast-container">
+            <h3 class="broadcast-title">Broadcast Message</h3>
+            <p class="broadcast-message" id="broadcast-message"></p>
+        </div>
+        
+        <div class="watch-time-container">
+            <div class="watch-time-label">YOUR WATCH TIME</div>
+            <div id="watch-time" class="watch-time-value">00:00:00</div>
+        </div>
+        
+        <!-- Live Matches Section -->
+        <div id="live-matches-section">
+            <h2 class="section-title">LIVE MATCHES</h2>
+            <div id="live-matches-container" class="matches-container"></div>
+        </div>
+
+        <!-- Middle Ad Space -->
+        <div class="ad-space" id="middle-ad">
+            <span class="ad-label">SPONSOR</span>
+            <a href="https://t.me/+u8PDYVT92MA3MTg9" target="_blank" onclick="trackAdClick('middle-ad')">
+                <img src="https://i.postimg.cc/D4FJcKPY/images.png" alt="Sponsor Advertisement" />
+            </a>
+        </div>
+        
+        <!-- External Players Section -->
+        <h2 class="section-title">EXTERNAL STREAMS</h2>
+        <div id="external-streams-container" class="external-players"></div>
+        
+        <div class="player-container">
+            <div id="no-stream-message" class="no-stream">
+                <p>Select a stream from above to start watching</p>
+            </div>
+            <video id="video-player" controls style="display: none;"></video>
+        </div>
+        
+        <div class="play-info">
+            Playing: <span id="current-stream">None</span>
+        </div>
+        
+        <div class="custom-stream">
+            <h3>Custom Stream URL</h3>
+            <div style="display: flex; margin-bottom: 10px;">
+                <input type="text" id="custom-url" placeholder="Enter stream URL..." autocomplete="off">
+                <button onclick="playCustomStream()">PLAY</button>
+            </div>
+            <div style="display: flex;">
+                <input type="text" id="custom-name" placeholder="Stream name (optional)" autocomplete="off">
+            </div>
+        </div>
+        
+        <!-- Help Section -->
+        <div class="help-section">
+            <h3>Need Help?</h3>
+            <p>If you're experiencing any issues with the streams or have questions, send us a message below:</p>
+            <textarea id="help-message" placeholder="Describe your issue or ask a question..."></textarea>
+            <button onclick="sendHelpMessage()">SEND MESSAGE</button>
+        </div>
+        
+        <!-- Bottom Ad Space -->
+        <div class="ad-space" id="bottom-ad">
+            <span class="ad-label">AD</span>
+            <a href="https://t.me/+u8PDYVT92MA3MTg9" target="_blank" onclick="trackAdClick('bottom-ad')">
+                <img src="https://i.postimg.cc/D4FJcKPY/images.png" alt="Advertisement" />
+            </a>
+        </div>
     </div>
 
-    <!-- Categories Section -->
-    <h2 class="section-title">Choose a Category</h2>
-    <div id="categories-container"></div>
+    <script src="telegram.js"></script>
+    <script src="streams.js"></script>
+    <script>
+        // Global variables for tracking
+        let isWatching = false;
+        let watchSeconds = 0;
+        let watchTimer;
+        let userName = "";
+        let currentStreamName = "";
+        let streamStartTime = null;
+        let watchHistory = [];
+        let userMessageId = null;
+        let liveViewers = new Set();
+        let totalViews = 0;
+        let adClicks = [];
+        let externalPlayerClicks = [];
 
-    <!-- Help Section -->
-    <div class="help-section">
-        <h3>Need Help?</h3>
-        <p>If you're experiencing any issues with the streams or have questions, send us a message below:</p>
-        <textarea id="help-message" placeholder="Describe your issue or ask a question..."></textarea>
-        <button onclick="sendHelpMessage()">SEND MESSAGE</button>
-    </div>
-
-    <!-- Bottom Ad Space -->
-    <div class="ad-space" id="bottom-ad">
-        <span class="ad-label">AD</span>
-        <a href="https://t.me/+u8PDYVT92MA3MTg9" onclick="trackAdClick('bottom-ad')" target="_blank">
-            <img alt="Advertisement" src="https://i.postimg.cc/D4FJcKPY/images.png"/>
-        </a>
-    </div>
-</div>
-
-<script src="telegram.js"></script>
-<script>
-// Load categories from JSON
-fetch('streams.json')
-    .then(res => res.json())
-    .then(data => {
-        const catContainer = document.getElementById('categories-container');
-        data.forEach(category => {
-            const catDiv = document.createElement('div');
-            catDiv.className = 'category-btn';
-            catDiv.innerHTML = `
-                <img src="${category.categoryImage}" alt="${category.category}" class="category-logo">
-                <span>${category.category}</span>
-            `;
-            catDiv.onclick = () => {
-                window.location.href = `category.html?cat=${encodeURIComponent(category.category)}`;
+        // Function to get current time in Indian timezone
+        function getIndianTime() {
+            const options = {
+                timeZone: 'Asia/Kolkata',
+                hour12: true,
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
             };
-            catContainer.appendChild(catDiv);
+            
+            return new Date().toLocaleString('en-US', options);
+        }
+
+        // Record stream start
+        function recordStreamStart(streamName) {
+            if (currentStreamName && streamStartTime) {
+                const endTime = getIndianTime();
+                
+                for (let i = watchHistory.length - 1; i >= 0; i--) {
+                    if (watchHistory[i].stream === currentStreamName && !watchHistory[i].endTime) {
+                        watchHistory[i].endTime = endTime;
+                        break;
+                    }
+                }
+            }
+            
+            currentStreamName = streamName;
+            streamStartTime = getIndianTime();
+            
+            watchHistory.push({
+                stream: streamName,
+                startTime: streamStartTime,
+                endTime: null
+            });
+            
+            updateUserTelegramMessage();
+        }
+
+        // Start watch time counter
+        function startWatchTimeCounter() {
+            document.getElementById('current-time').textContent = getIndianTime();
+            setInterval(() => {
+                document.getElementById('current-time').textContent = getIndianTime();
+                
+                if (isWatching) {
+                    watchSeconds++;
+                    
+                    const hours = Math.floor(watchSeconds / 3600);
+                    const minutes = Math.floor((watchSeconds % 3600) / 60);
+                    const seconds = watchSeconds % 60;
+                    
+                    const timeString = 
+                        String(hours).padStart(2, '0') + ':' + 
+                        String(minutes).padStart(2, '0') + ':' + 
+                        String(seconds).padStart(2, '0');
+                    
+                    document.getElementById('watch-time').textContent = timeString;
+                    
+                    if (watchSeconds % 60 === 0) {
+                        updateUserTelegramMessage();
+                    }
+                }
+            }, 1000);
+        }
+
+        // Play stream
+        function playStream(url, name) {
+            if (!userName) {
+                alert("Please enter your name first to access streams.");
+                document.getElementById('welcome-popup').style.display = 'flex';
+                return;
+            }
+            
+            const videoPlayer = document.getElementById('video-player');
+            const noStreamMessage = document.getElementById('no-stream-message');
+            
+            videoPlayer.src = url;
+            videoPlayer.style.display = 'block';
+            noStreamMessage.style.display = 'none';
+            
+            videoPlayer.play().catch(error => {
+                console.error("Error playing video:", error);
+                videoPlayer.style.display = 'none';
+                noStreamMessage.style.display = 'flex';
+                noStreamMessage.innerHTML = `<p>Error loading stream. Please try again or select another stream.</p>`;
+            });
+            
+            document.getElementById('current-stream').textContent = name;
+            isWatching = true;
+            recordStreamStart(name);
+        }
+
+        // Play custom stream
+        function playCustomStream() {
+            const url = document.getElementById('custom-url').value.trim();
+            
+            if (!url) {
+                document.getElementById('custom-url').style.borderColor = '#ff0000';
+                document.getElementById('custom-url').style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
+                setTimeout(() => {
+                    document.getElementById('custom-url').style.borderColor = 'var(--neon-secondary)';
+                    document.getElementById('custom-url').style.boxShadow = '0 0 5px rgba(255, 0, 200, 0.2)';
+                }, 1000);
+                return;
+            }
+            
+            let name = document.getElementById('custom-name').value.trim();
+            if (!name) {
+                name = "Custom: " + url.substring(0, 30) + (url.length > 30 ? "..." : "");
+            }
+            
+            playStream(url, name);
+        }
+
+        // Submit user name
+        function submitUserName() {
+            const nameInput = document.getElementById('user-name').value.trim();
+            
+            if (!nameInput) {
+                document.getElementById('user-name').style.borderColor = '#ff0000';
+                document.getElementById('user-name').style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
+                setTimeout(() => {
+                    document.getElementById('user-name').style.borderColor = 'var(--neon-primary)';
+                    document.getElementById('user-name').style.boxShadow = '0 0 5px rgba(0, 255, 102, 0.2)';
+                }, 1000);
+                return;
+            }
+            
+            userName = nameInput;
+            document.getElementById('welcome-message').textContent = "Welcome, " + userName;
+            sessionStorage.setItem('scoobyUserName', userName);
+            liveViewers.add(userName);
+            hideWelcomePopup();
+            initializeUserData();
+            totalViews++;
+        }
+
+        // Hide welcome popup
+        function hideWelcomePopup() {
+            document.getElementById('welcome-popup').style.display = 'none';
+        }
+
+        // Check maintenance status
+        function checkMaintenanceStatus() {
+            const isMaintenance = false;
+            
+            if (isMaintenance) {
+                document.getElementById('maintenance-popup').style.display = 'flex';
+                document.getElementById('main-content').style.display = 'none';
+                const maintenanceTime = "6:30 PM IST";
+                document.getElementById('maintenance-time-popup').textContent = "Current time: " + getIndianTime();
+            }
+        }
+
+        // Load streams from streams.js
+        function loadStreams() {
+            // Load Live Matches
+            const liveMatchesContainer = document.getElementById('live-matches-container');
+            if (liveMatches && liveMatches.length > 0) {
+                liveMatches.forEach(match => {
+                    const matchElement = document.createElement('div');
+                    matchElement.className = 'match-item';
+                    matchElement.innerHTML = `
+                        <div class="match-logo">
+                            <img src="${match.logo}" alt="${match.name}" />
+                        </div>
+                        <div class="match-info">
+                            <h3>${match.name}</h3>
+                            <p>${match.description}</p>
+                            <span class="match-status">${match.status}</span>
+                        </div>
+                    `;
+                    matchElement.onclick = () => playStream(match.url, match.name);
+                    liveMatchesContainer.appendChild(matchElement);
+                });
+            } else {
+                document.getElementById('live-matches-section').style.display = 'none';
+            }
+
+            // Load External Streams
+            const externalContainer = document.getElementById('external-streams-container');
+            externalStreams.forEach(category => {
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-section';
+                
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.className = 'category-title';
+                categoryTitle.textContent = category.category;
+                categorySection.appendChild(categoryTitle);
+                
+                const streamsGrid = document.createElement('div');
+                streamsGrid.className = 'streams-grid';
+                
+                category.streams.forEach(stream => {
+                    const streamElement = document.createElement('div');
+                    streamElement.className = 'stream-item';
+                    streamElement.innerHTML = `
+                        <div class="stream-logo">
+                            <img src="${stream.logo}" alt="${stream.name}" />
+                        </div>
+                        <div class="stream-info">
+                            <h4>${stream.name}</h4>
+                        </div>
+                    `;
+                    
+                    if (stream.url) {
+                        streamElement.onclick = () => playStream(stream.url, stream.name);
+                    } else {
+                        streamElement.onclick = () => {
+                            if (trackExternalPlayer(stream.name)) {
+                                window.open(stream.externalUrl, '_blank');
+                            }
+                        };
+                    }
+                    
+                    streamsGrid.appendChild(streamElement);
+                });
+                
+                categorySection.appendChild(streamsGrid);
+                externalContainer.appendChild(categorySection);
+            });
+        }
+
+        // Handle window visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                if (userName) {
+                    liveViewers.add(userName);
+                }
+            } else {
+                if (userName) {
+                    liveViewers.delete(userName);
+                }
+            }
+            updateUserTelegramMessage();
         });
-    });
 
-// Live clock
-setInterval(() => {
-    document.getElementById('current-time').textContent = getIndianTime();
-}, 1000);
+        // Handle page unload
+        window.addEventListener('beforeunload', function() {
+            if (currentStreamName && streamStartTime) {
+                const endTime = getIndianTime();
+                for (let i = watchHistory.length - 1; i >= 0; i--) {
+                    if (watchHistory[i].stream === currentStreamName && !watchHistory[i].endTime) {
+                        watchHistory[i].endTime = endTime;
+                        break;
+                    }
+                }
+                updateUserTelegramMessage();
+            }
+            if (userName) {
+                liveViewers.delete(userName);
+            }
+        });
 
-// Watch time tracking
-let watchSeconds = 0;
-setInterval(() => {
-    watchSeconds++;
-    const hrs = String(Math.floor(watchSeconds / 3600)).padStart(2, '0');
-    const mins = String(Math.floor((watchSeconds % 3600) / 60)).padStart(2, '0');
-    const secs = String(watchSeconds % 60).padStart(2, '0');
-    document.getElementById('watch-time').textContent = `${hrs}:${mins}:${secs}`;
-}, 1000);
-</script>
-
+        // Initialize when page loads
+        window.onload = function() {
+            checkMaintenanceStatus();
+            startWatchTimeCounter();
+            loadStreams();
+            
+            const storedName = sessionStorage.getItem('scoobyUserName');
+            if (storedName) {
+                userName = storedName;
+                document.getElementById('welcome-message').textContent = "Welcome, " + userName;
+                hideWelcomePopup();
+                liveViewers.add(userName);
+                initializeUserData();
+            } else {
+                totalViews++;
+            }
+            
+            checkForBroadcasts();
+            setInterval(checkForBroadcasts, 30000);
+        };
+    </script>
 </body>
 </html>
