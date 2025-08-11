@@ -1,413 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scooby Streaming Hub</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stream.jz</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* Quick basic styles for layout */
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f8f9fa;
+  }
+
+  h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  #live-matches-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .live-match {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 320px; /* rectangular */
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .live-match img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  .live-match-details {
+    flex-grow: 1;
+  }
+
+  .live-match-name {
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+
+  .live-match-status {
+    font-size: 0.9em;
+    color: #888;
+  }
+
+  #external-streams-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .stream-square {
+    width: 140px; /* square-ish */
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .stream-square img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 8px;
+  }
+
+  /* Popup overlay styles */
+  #popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  #popup-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+  }
+
+  #popup-content iframe {
+    width: 640px;
+    height: 360px;
+    border: none;
+  }
+
+  #popup-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* Category title style */
+  .category-title {
+    width: 100%;
+    font-weight: bold;
+    margin: 30px 0 10px 0;
+    font-size: 1.2em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+</style>
 </head>
 <body>
-    <!-- Welcome Popup -->
-    <div class="popup-overlay" id="welcome-popup">
-        <div class="popup-content">
-            <h2 class="popup-title">WELCOME TO SCOOBY CRICKET HUB </h2>
-            <p>Enter your name to access premium streams</p>
-            <input type="text" id="user-name" class="popup-input" placeholder="Your Name" autocomplete="off">
-            <button class="popup-button" onclick="submitUserName()">ENTER</button>
-            <p class="popup-welcome-msg">Experience the best streaming quality!</p>
+
+<h2>Live Matches</h2>
+<div id="live-matches-container"></div>
+
+<h2>External Streams</h2>
+<div id="external-streams-container"></div>
+
+<!-- Popup Overlay -->
+<div id="popup-overlay">
+  <div id="popup-close">&times;</div>
+  <div id="popup-content"></div>
+</div>
+
+<script src="stream.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const liveContainer = document.getElementById('live-matches-container');
+    const externalContainer = document.getElementById('external-streams-container');
+    const popupOverlay = document.getElementById('popup-overlay');
+    const popupContent = document.getElementById('popup-content');
+    const popupClose = document.getElementById('popup-close');
+
+    // Render live matches (rectangular)
+    liveMatches.forEach(match => {
+      const div = document.createElement('div');
+      div.className = 'live-match';
+
+      div.innerHTML = `
+        <img src="${match.logo || 'https://via.placeholder.com/60?text=Logo'}" alt="Logo" />
+        <div class="live-match-details">
+          <div class="live-match-name">${match.name}</div>
+          <div class="live-match-status">${match.description || match.status || ''}</div>
         </div>
-    </div>
+      `;
 
-    <!-- Maintenance Popup -->
-    <div class="popup-overlay" id="maintenance-popup">
-        <div class="popup-content">
-            <h2 class="popup-title"> SERVER IN MAINTENANCE TO BE AVAILABLE SOON </h2>
-            <div class="maintenance-icon">🛠️</div>
-            <p>We're currently improving our streaming services to provide you with a better experience.</p>
-            <p>Expected to be back at 6:30 PM IST.</p>
-            <p id="maintenance-time-popup" class="popup-welcome-msg"></p>
-        </div>
-    </div>
+      div.addEventListener('click', () => {
+        openPopup(match.url);
+      });
 
-    <div class="container" id="main-content">
-        <!-- Top Ad Space -->
-        <div class="ad-space" id="top-ad">
-            <span class="ad-label">AD</span>
-            <a href="https://t.me/+u8PDYVT92MA3MTg9" target="_blank" onclick="trackAdClick('top-ad')">
-                <img src="https://i.postimg.cc/D4FJcKPY/images.png" alt="Advertisement" />
-            </a>
-        </div>
-        
-        <header>
-            <h1>Scooby Streaming Hub</h1>
-            <div>
-                <span id="current-time"></span>
-                <span id="welcome-message" class="welcome-user"></span>
-            </div>
-        </header>
-        
-        <!-- Broadcast Message Section -->
-        <div class="broadcast-container" id="broadcast-container">
-            <h3 class="broadcast-title">Broadcast Message</h3>
-            <p class="broadcast-message" id="broadcast-message"></p>
-        </div>
-        
-        <div class="watch-time-container">
-            <div class="watch-time-label">YOUR WATCH TIME</div>
-            <div id="watch-time" class="watch-time-value">00:00:00</div>
-        </div>
-        
-        <!-- Live Matches Section -->
-        <div id="live-matches-section">
-            <h2 class="section-title">LIVE MATCHES</h2>
-            <div id="live-matches-container" class="matches-container"></div>
-        </div>
+      liveContainer.appendChild(div);
+    });
 
-        <!-- Middle Ad Space -->
-        <div class="ad-space" id="middle-ad">
-            <span class="ad-label">SPONSOR</span>
-            <a href="https://t.me/+u8PDYVT92MA3MTg9" target="_blank" onclick="trackAdClick('middle-ad')">
-                <img src="https://i.postimg.cc/D4FJcKPY/images.png" alt="Sponsor Advertisement" />
-            </a>
-        </div>
-        
-        <!-- External Players Section -->
-        <h2 class="section-title">EXTERNAL STREAMS</h2>
-        <div id="external-streams-container" class="external-players"></div>
-        
-        <div class="player-container">
-            <div id="no-stream-message" class="no-stream">
-                <p>Select a stream from above to start watching</p>
-            </div>
-            <video id="video-player" controls style="display: none;"></video>
-        </div>
-        
-        <div class="play-info">
-            Playing: <span id="current-stream">None</span>
-        </div>
-        
-        <div class="custom-stream">
-            <h3>Custom Stream URL</h3>
-            <div style="display: flex; margin-bottom: 10px;">
-                <input type="text" id="custom-url" placeholder="Enter stream URL..." autocomplete="off">
-                <button onclick="playCustomStream()">PLAY</button>
-            </div>
-            <div style="display: flex;">
-                <input type="text" id="custom-name" placeholder="Stream name (optional)" autocomplete="off">
-            </div>
-        </div>
-        
-        <!-- Help Section -->
-        <div class="help-section">
-            <h3>Need Help?</h3>
-            <p>If you're experiencing any issues with the streams or have questions, send us a message below:</p>
-            <textarea id="help-message" placeholder="Describe your issue or ask a question..."></textarea>
-            <button onclick="sendHelpMessage()">SEND MESSAGE</button>
-        </div>
-        
-        <!-- Bottom Ad Space -->
-        <div class="ad-space" id="bottom-ad">
-            <span class="ad-label">AD</span>
-            <a href="https://t.me/+u8PDYVT92MA3MTg9" target="_blank" onclick="trackAdClick('bottom-ad')">
-                <img src="https://i.postimg.cc/D4FJcKPY/images.png" alt="Advertisement" />
-            </a>
-        </div>
-    </div>
+    // Render external streams (square grouped by category)
+    externalStreams.forEach(category => {
+      // Category title
+      const catTitle = document.createElement('div');
+      catTitle.className = 'category-title';
+      catTitle.textContent = category.category;
+      externalContainer.appendChild(catTitle);
 
-    <script src="telegram.js"></script>
-    <script src="streams.js"></script>
-    <script>
-        // Global variables for tracking
-        let isWatching = false;
-        let watchSeconds = 0;
-        let watchTimer;
-        let userName = "";
-        let currentStreamName = "";
-        let streamStartTime = null;
-        let watchHistory = [];
-        let userMessageId = null;
-        let liveViewers = new Set();
-        let totalViews = 0;
-        let adClicks = [];
-        let externalPlayerClicks = [];
+      // Streams under category
+      category.streams.forEach(stream => {
+        const streamDiv = document.createElement('div');
+        streamDiv.className = 'stream-square';
 
-        // Function to get current time in Indian timezone
-        function getIndianTime() {
-            const options = {
-                timeZone: 'Asia/Kolkata',
-                hour12: true,
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric',
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            };
-            
-            return new Date().toLocaleString('en-US', options);
-        }
+        streamDiv.innerHTML = `
+          <img src="${stream.logo || 'https://via.placeholder.com/80?text=Logo'}" alt="Logo" />
+          <div>${stream.name}</div>
+          ${stream.note ? `<small>${stream.note}</small>` : ''}
+        `;
 
-        // Record stream start
-        function recordStreamStart(streamName) {
-            if (currentStreamName && streamStartTime) {
-                const endTime = getIndianTime();
-                
-                for (let i = watchHistory.length - 1; i >= 0; i--) {
-                    if (watchHistory[i].stream === currentStreamName && !watchHistory[i].endTime) {
-                        watchHistory[i].endTime = endTime;
-                        break;
-                    }
-                }
-            }
-            
-            currentStreamName = streamName;
-            streamStartTime = getIndianTime();
-            
-            watchHistory.push({
-                stream: streamName,
-                startTime: streamStartTime,
-                endTime: null
-            });
-            
-            updateUserTelegramMessage();
-        }
-
-        // Start watch time counter
-        function startWatchTimeCounter() {
-            document.getElementById('current-time').textContent = getIndianTime();
-            setInterval(() => {
-                document.getElementById('current-time').textContent = getIndianTime();
-                
-                if (isWatching) {
-                    watchSeconds++;
-                    
-                    const hours = Math.floor(watchSeconds / 3600);
-                    const minutes = Math.floor((watchSeconds % 3600) / 60);
-                    const seconds = watchSeconds % 60;
-                    
-                    const timeString = 
-                        String(hours).padStart(2, '0') + ':' + 
-                        String(minutes).padStart(2, '0') + ':' + 
-                        String(seconds).padStart(2, '0');
-                    
-                    document.getElementById('watch-time').textContent = timeString;
-                    
-                    if (watchSeconds % 60 === 0) {
-                        updateUserTelegramMessage();
-                    }
-                }
-            }, 1000);
-        }
-
-        // Play stream
-        function playStream(url, name) {
-            if (!userName) {
-                alert("Please enter your name first to access streams.");
-                document.getElementById('welcome-popup').style.display = 'flex';
-                return;
-            }
-            
-            const videoPlayer = document.getElementById('video-player');
-            const noStreamMessage = document.getElementById('no-stream-message');
-            
-            videoPlayer.src = url;
-            videoPlayer.style.display = 'block';
-            noStreamMessage.style.display = 'none';
-            
-            videoPlayer.play().catch(error => {
-                console.error("Error playing video:", error);
-                videoPlayer.style.display = 'none';
-                noStreamMessage.style.display = 'flex';
-                noStreamMessage.innerHTML = `<p>Error loading stream. Please try again or select another stream.</p>`;
-            });
-            
-            document.getElementById('current-stream').textContent = name;
-            isWatching = true;
-            recordStreamStart(name);
-        }
-
-        // Play custom stream
-        function playCustomStream() {
-            const url = document.getElementById('custom-url').value.trim();
-            
-            if (!url) {
-                document.getElementById('custom-url').style.borderColor = '#ff0000';
-                document.getElementById('custom-url').style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
-                setTimeout(() => {
-                    document.getElementById('custom-url').style.borderColor = 'var(--neon-secondary)';
-                    document.getElementById('custom-url').style.boxShadow = '0 0 5px rgba(255, 0, 200, 0.2)';
-                }, 1000);
-                return;
-            }
-            
-            let name = document.getElementById('custom-name').value.trim();
-            if (!name) {
-                name = "Custom: " + url.substring(0, 30) + (url.length > 30 ? "..." : "");
-            }
-            
-            playStream(url, name);
-        }
-
-        // Submit user name
-        function submitUserName() {
-            const nameInput = document.getElementById('user-name').value.trim();
-            
-            if (!nameInput) {
-                document.getElementById('user-name').style.borderColor = '#ff0000';
-                document.getElementById('user-name').style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
-                setTimeout(() => {
-                    document.getElementById('user-name').style.borderColor = 'var(--neon-primary)';
-                    document.getElementById('user-name').style.boxShadow = '0 0 5px rgba(0, 255, 102, 0.2)';
-                }, 1000);
-                return;
-            }
-            
-            userName = nameInput;
-            document.getElementById('welcome-message').textContent = "Welcome, " + userName;
-            sessionStorage.setItem('scoobyUserName', userName);
-            liveViewers.add(userName);
-            hideWelcomePopup();
-            initializeUserData();
-            totalViews++;
-        }
-
-        // Hide welcome popup
-        function hideWelcomePopup() {
-            document.getElementById('welcome-popup').style.display = 'none';
-        }
-
-        // Check maintenance status
-        function checkMaintenanceStatus() {
-            const isMaintenance = false;
-            
-            if (isMaintenance) {
-                document.getElementById('maintenance-popup').style.display = 'flex';
-                document.getElementById('main-content').style.display = 'none';
-                const maintenanceTime = "6:30 PM IST";
-                document.getElementById('maintenance-time-popup').textContent = "Current time: " + getIndianTime();
-            }
-        }
-
-        // Load streams from streams.js
-        function loadStreams() {
-            // Load Live Matches
-            const liveMatchesContainer = document.getElementById('live-matches-container');
-            if (liveMatches && liveMatches.length > 0) {
-                liveMatches.forEach(match => {
-                    const matchElement = document.createElement('div');
-                    matchElement.className = 'match-item';
-                    matchElement.innerHTML = `
-                        <div class="match-logo">
-                            <img src="${match.logo}" alt="${match.name}" />
-                        </div>
-                        <div class="match-info">
-                            <h3>${match.name}</h3>
-                            <p>${match.description}</p>
-                            <span class="match-status">${match.status}</span>
-                        </div>
-                    `;
-                    matchElement.onclick = () => playStream(match.url, match.name);
-                    liveMatchesContainer.appendChild(matchElement);
-                });
-            } else {
-                document.getElementById('live-matches-section').style.display = 'none';
-            }
-
-            // Load External Streams
-            const externalContainer = document.getElementById('external-streams-container');
-            externalStreams.forEach(category => {
-                const categorySection = document.createElement('div');
-                categorySection.className = 'category-section';
-                
-                const categoryTitle = document.createElement('h3');
-                categoryTitle.className = 'category-title';
-                categoryTitle.textContent = category.category;
-                categorySection.appendChild(categoryTitle);
-                
-                const streamsGrid = document.createElement('div');
-                streamsGrid.className = 'streams-grid';
-                
-                category.streams.forEach(stream => {
-                    const streamElement = document.createElement('div');
-                    streamElement.className = 'stream-item';
-                    streamElement.innerHTML = `
-                        <div class="stream-logo">
-                            <img src="${stream.logo}" alt="${stream.name}" />
-                        </div>
-                        <div class="stream-info">
-                            <h4>${stream.name}</h4>
-                        </div>
-                    `;
-                    
-                    if (stream.url) {
-                        streamElement.onclick = () => playStream(stream.url, stream.name);
-                    } else {
-                        streamElement.onclick = () => {
-                            if (trackExternalPlayer(stream.name)) {
-                                window.open(stream.externalUrl, '_blank');
-                            }
-                        };
-                    }
-                    
-                    streamsGrid.appendChild(streamElement);
-                });
-                
-                categorySection.appendChild(streamsGrid);
-                externalContainer.appendChild(categorySection);
-            });
-        }
-
-        // Handle window visibility changes
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'visible') {
-                if (userName) {
-                    liveViewers.add(userName);
-                }
-            } else {
-                if (userName) {
-                    liveViewers.delete(userName);
-                }
-            }
-            updateUserTelegramMessage();
+        streamDiv.addEventListener('click', () => {
+          openPopup(stream.externalUrl);
         });
 
-        // Handle page unload
-        window.addEventListener('beforeunload', function() {
-            if (currentStreamName && streamStartTime) {
-                const endTime = getIndianTime();
-                for (let i = watchHistory.length - 1; i >= 0; i--) {
-                    if (watchHistory[i].stream === currentStreamName && !watchHistory[i].endTime) {
-                        watchHistory[i].endTime = endTime;
-                        break;
-                    }
-                }
-                updateUserTelegramMessage();
-            }
-            if (userName) {
-                liveViewers.delete(userName);
-            }
-        });
+        externalContainer.appendChild(streamDiv);
+      });
+    });
 
-        // Initialize when page loads
-        window.onload = function() {
-            checkMaintenanceStatus();
-            startWatchTimeCounter();
-            loadStreams();
-            
-            const storedName = sessionStorage.getItem('scoobyUserName');
-            if (storedName) {
-                userName = storedName;
-                document.getElementById('welcome-message').textContent = "Welcome, " + userName;
-                hideWelcomePopup();
-                liveViewers.add(userName);
-                initializeUserData();
-            } else {
-                totalViews++;
-            }
-            
-            checkForBroadcasts();
-            setInterval(checkForBroadcasts, 30000);
-        };
-    </script>
+    // Popup open function
+    function openPopup(url) {
+      popupContent.innerHTML = `
+        <iframe src="${url}" allowfullscreen allow="autoplay"></iframe>
+      `;
+      popupOverlay.style.display = 'flex';
+    }
+
+    // Popup close
+    popupClose.addEventListener('click', () => {
+      popupOverlay.style.display = 'none';
+      popupContent.innerHTML = '';
+    });
+
+    // Close popup on outside click
+    popupOverlay.addEventListener('click', e => {
+      if (e.target === popupOverlay) {
+        popupOverlay.style.display = 'none';
+        popupContent.innerHTML = '';
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
