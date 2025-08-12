@@ -1,11 +1,14 @@
 {
   "liveMatches": [
     {
-      "name": "India vs Australia",
-      "description": "3rd T20I • Live",
+      "name": "MCA Men's T20 Inter-State Championship 2025",
+      "tournament": "MCA Men's T20 Inter-State Championship, 2025",
+      "team1": "Johor",
+      "team2": "Kuala Lumpur",
       "logo": "https://i.postimg.cc/L6pYv2nZ/cricket-match-logo.png",
-      "externalUrl": "https://example.com/player",
-      "status": "LIVE"
+      "externalUrl": "https://scoobyfancode.vercel.app/play.html?id=132765",
+      "status": "LIVE",
+      "time": "07:00:00"
     }
   ],
   "externalStreams": [
