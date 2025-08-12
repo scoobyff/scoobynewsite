@@ -289,36 +289,22 @@ h1 {
     cursor: pointer;
     transition: all 0.3s;
     border-radius: 15px;
-    position: relative;
-    overflow: hidden;
     box-shadow: 0 0 8px rgba(0, 195, 255, 0.3);
     
-    /* Perfect square without overlapping */
+    /* Perfect square */
     aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    min-height: 150px;
+    text-align: center;
 }
 
 .stream-item:hover {
-    color: white;
-    text-shadow: 0 0 8px white;
     transform: translateY(-3px);
     box-shadow: 0 0 20px rgba(0, 195, 255, 0.6);
     border-color: var(--neon-blue);
-}
-
-.stream-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    text-align: center;
 }
 
 .stream-logo {
@@ -350,7 +336,6 @@ h1 {
     letter-spacing: 0.5px;
     font-weight: bold;
     line-height: 1.3;
-    word-wrap: break-word;
 }
 
 .stream-note {
@@ -364,14 +349,12 @@ h1 {
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .streams-grid {
-        grid-template-columns: 1fr 1fr;
         gap: 15px;
         padding: 5px;
     }
     
     .stream-item {
         padding: 15px;
-        min-height: 120px;
     }
     
     .stream-logo {
@@ -382,10 +365,6 @@ h1 {
     
     .stream-info h4 {
         font-size: 12px;
-    }
-    
-    .stream-note {
-        font-size: 9px;
     }
 }
 
