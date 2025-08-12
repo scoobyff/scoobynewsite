@@ -259,7 +259,7 @@ h1 {
     }
 }
 
-/* External Streams Section - Perfect Square Format like Image 3 */
+/* External Streams Section - Clean Separate Squares */
 .category-section {
     margin: 30px 0;
 }
@@ -277,42 +277,30 @@ h1 {
 .streams-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 20px;
     max-width: 100%;
+    padding: 10px;
 }
 
 .stream-item {
     background-color: rgba(40, 40, 40, 0.9);
     border: 2px solid var(--neon-blue);
     color: white;
-    padding: 15px;
     cursor: pointer;
     transition: all 0.3s;
     border-radius: 15px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 8px rgba(0, 195, 255, 0.3);
-    text-align: center;
+    
+    /* Perfect square without overlapping */
+    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    /* Force perfect square */
-    width: 100%;
-    height: 0;
-    padding-bottom: 100%; /* This creates a 1:1 aspect ratio */
-    padding-top: 0;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.stream-item > * {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
+    padding: 20px;
+    min-height: 150px;
 }
 
 .stream-item:hover {
@@ -330,14 +318,15 @@ h1 {
     justify-content: center;
     height: 100%;
     width: 100%;
+    text-align: center;
 }
 
 .stream-logo {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     border: 2px solid var(--neon-blue);
     background-color: rgba(0, 0, 0, 0.5);
     flex-shrink: 0;
@@ -356,40 +345,47 @@ h1 {
 
 .stream-info h4 {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
     color: white;
     letter-spacing: 0.5px;
     font-weight: bold;
-    line-height: 1.2;
+    line-height: 1.3;
+    word-wrap: break-word;
 }
 
 .stream-note {
-    margin: 5px 0 0 0;
-    font-size: 9px;
+    margin: 8px 0 0 0;
+    font-size: 10px;
     color: #888;
     font-style: italic;
-    line-height: 1.1;
+    line-height: 1.2;
 }
 
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .streams-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 15px;
+        padding: 5px;
+    }
+    
+    .stream-item {
+        padding: 15px;
+        min-height: 120px;
     }
     
     .stream-logo {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 8px;
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
     }
     
     .stream-info h4 {
-        font-size: 11px;
+        font-size: 12px;
     }
     
     .stream-note {
-        font-size: 8px;
+        font-size: 9px;
     }
 }
 
