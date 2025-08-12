@@ -1,45 +1,223 @@
-[
+{
+  "liveMatches": [
     {
-        "category": "Bein Sports",
-        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten_4_HD_Tamil.png",
-        "streams": [
-            {
-                "name": "Bein Sports 1 HD",
-                "url": "https://bein1.example.com",
-                "image": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten3_HD.png"
-            },
-            {
-                "name": "Bein Sports 2 HD",
-                "url": "https://bein2.example.com",
-                "image": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten_4_HD_Telugu.png"
-            }
-        ]
-    },
-    {
-        "category": "Star Sports",
-        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten3_HD.png"
-        "streams": [
-            {
-                "name": "Star Sports 1 HD",
-                "url": "https://starsports1.example.com",
-                "image": "images/ss1.png"
-            },
-            {
-                "name": "Star Sports 2 HD",
-                "url": "https://starsports2.example.com",
-                "image": "images/ss2.png"
-            }
-        ]
-    },
-    {
-        "category": "Ten Sports",
-        "categoryImage": "https://jiotvimages.cdn.jio.com/dare_images/images/Ten_4_Telugu.png",
-        "streams": [
-            {
-                "name": "Ten Sports 1 HD",
-                "url": "https://ten1.example.com",
-                "image": "images/ten1.png"
-            }
-        ]
+      "name": "India vs Australia",
+      "description": "3rd T20I • Live",
+      "logo": "https://i.postimg.cc/L6pYv2nZ/cricket-match-logo.png",
+      "externalUrl": "https://example.com/player",
+      "status": "LIVE"
     }
-]
+  ],
+  "externalStreams": [
+    {
+      "category": "NEED 30 SEC TO LOAD",
+      "streams": []
+    },
+    {
+      "category": "FANCODE WEB 🇮🇳  👇",
+      "streams": [
+        {
+          "name": "Fancode Web 🇮🇳",
+          "logo": "https://i.postimg.cc/RZkGBjhz/fancode-logo.png",
+          "externalUrl": "https://scoobyfancode.vercel.app/"
+        }
+      ]
+    },
+    {
+      "category": "APL T20 2025",
+      "streams": [
+        {
+          "name": "Amaravathi Royals vs Tungabhadra Warriors",
+          "logo": "https://i.postimg.cc/RZkGBjhz/fancode-logo.png",
+          "externalUrl": "https://scoobyfancode.vercel.app/play.html?id=132765"
+        },
+        {
+          "name": "Simhadri Vizag Lions vs Kakinada Kings",
+          "logo": "https://i.postimg.cc/RZkGBjhz/fancode-logo.png",
+          "externalUrl": "https://scoobyfancode.vercel.app/play.html?id=132766"
+        },
+        {
+          "name": "APL TELUGU SONY",
+          "logo": "https://i.postimg.cc/6qDGvXYF/sony-ten-4-logo.png",
+          "externalUrl": "https://scoobystreams.vercel.app/sonysports.html?c=sonyten4hd"
+        },
+        {
+          "name": "APL ENGLISH SONY",
+          "logo": "https://i.postimg.cc/nLv4hQWH/sony-ten-5-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/sonyten5"
+        }
+      ]
+    },
+    {
+      "category": "The Hundred 2025 Men & Women, England 2025",
+      "streams": [
+        {
+          "name": "ASTRO CRICKET",
+          "logo": "https://i.postimg.cc/MH7RJL8d/astro-cricket-logo.png",
+          "externalUrl": "https://scoobystreamsv2.vercel.app/play2.html?id=astro2"
+        },
+        {
+          "name": "Sky Sports Cricket",
+          "logo": "https://i.postimg.cc/QdLNvgQj/sky-sports-cricket-logo.png",
+          "externalUrl": "https://scoobystreamsv2.vercel.app/play2.html?id=skysportscricket"
+        },
+        {
+          "name": "FOX 501",
+          "logo": "https://i.postimg.cc/7YtBkf8c/fox-501-logo.png",
+          "externalUrl": "https://scoobystreamsv2.vercel.app/play2.html?id=fox501"
+        },
+        {
+          "name": "Willow Hundred AD Free",
+          "logo": "https://i.postimg.cc/MKNGq05F/willow-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/hundredadfree"
+        },
+        {
+          "name": "Willow By Cricbuzz",
+          "logo": "https://i.postimg.cc/MKNGq05F/willow-logo.png",
+          "externalUrl": "https://scoobystreamsv2.vercel.app/play2.html?id=willowbycricbuzz"
+        },
+        {
+          "name": "Willow 2 By Cricbuzz",
+          "logo": "https://i.postimg.cc/MKNGq05F/willow-logo.png",
+          "externalUrl": "https://scoobystreamsv2.vercel.app/play2.html?id=willow2bycricbuzz"
+        },
+        {
+          "name": "Willow Sports",
+          "logo": "https://i.postimg.cc/MKNGq05F/willow-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/willowsports"
+        },
+        {
+          "name": "BBC Sports",
+          "logo": "https://i.postimg.cc/65XMHsZk/bbc-sports-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/bbcsports",
+          "note": "only on Tuesday and Saturday"
+        },
+        {
+          "name": "TEN CRICKET",
+          "logo": "https://i.postimg.cc/0QXw6K8d/ten-cricket-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tencricket"
+        },
+        {
+          "name": "Sony Ten 1 HD English",
+          "logo": "https://i.postimg.cc/c4pL4Ztf/sony-ten-1-logo.png",
+          "externalUrl": "https://scoobystreams.vercel.app/sonysports.html?c=sonyten1hd"
+        },
+        {
+          "name": "Sony Ten 3 HD Hindi",
+          "logo": "https://i.postimg.cc/8CL7nZy8/sony-ten-3-logo.png",
+          "externalUrl": "https://scoobystreams.vercel.app/sonysports.html?c=sonyten3hd"
+        },
+        {
+          "name": "Sony Ten 5 HD",
+          "logo": "https://i.postimg.cc/nLv4hQWH/sony-ten-5-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/sonyten5"
+        }
+      ]
+    },
+    {
+      "category": "FORMULA 1 STREAMS",
+      "streams": [
+        {
+          "name": "F1 ENG ✅",
+          "logo": "https://i.postimg.cc/SQ9Mm2yH/f1-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/f1"
+        },
+        {
+          "name": "Sky Sports F1",
+          "logo": "https://i.postimg.cc/q7FvL9hG/sky-sports-f1-logo.png",
+          "externalUrl": "https://scoobystreamsv2.vercel.app/play2.html?id=skysportsf1"
+        },
+        {
+          "name": "BEIN SPORTS F1",
+          "logo": "https://i.postimg.cc/nzVk2vtr/bein-sports-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/bein1my"
+        },
+        {
+          "name": "FANCODE 🌎",
+          "logo": "https://i.postimg.cc/RZkGBjhz/fancode-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/fancode1"
+        },
+        {
+          "name": "FANCODE 🇮🇳",
+          "logo": "https://i.postimg.cc/RZkGBjhz/fancode-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/f1"
+        },
+        {
+          "name": "TSN 4 F1",
+          "logo": "https://i.postimg.cc/T3xW2qjL/tsn-4-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tsn4"
+        },
+        {
+          "name": "TSN 5 F1",
+          "logo": "https://i.postimg.cc/1t5T8Xhs/tsn-5-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tsn5"
+        }
+      ]
+    },
+    {
+      "category": "CRICKET STREAMS",
+      "streams": [
+        {
+          "name": "WILLOW SPORTS 24*7",
+          "logo": "https://i.postimg.cc/MKNGq05F/willow-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/willowsports"
+        },
+        {
+          "name": "TEN CRICKET",
+          "logo": "https://i.postimg.cc/0QXw6K8d/ten-cricket-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tencricket"
+        },
+        {
+          "name": "ASTRO CRICKET",
+          "logo": "https://i.postimg.cc/MH7RJL8d/astro-cricket-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/astro"
+        },
+        {
+          "name": "FANCODE 24/7 1",
+          "logo": "https://i.postimg.cc/RZkGBjhz/fancode-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/fancode1"
+        },
+        {
+          "name": "FANCODE 24/7 2",
+          "logo": "https://i.postimg.cc/RZkGBjhz/fancode-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/fancode2"
+        }
+      ]
+    },
+    {
+      "category": "FOOT BALL STREAMS",
+      "streams": [
+        {
+          "name": "BEIN SPORTS 1",
+          "logo": "https://i.postimg.cc/nzVk2vtr/bein-sports-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/bein1my"
+        },
+        {
+          "name": "TNT 1",
+          "logo": "https://i.postimg.cc/J0qVn2YH/tnt-1-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tnt1"
+        },
+        {
+          "name": "TNT 2",
+          "logo": "https://i.postimg.cc/g0KQn8Rr/tnt-2-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tnt2"
+        },
+        {
+          "name": "TNT 3",
+          "logo": "https://i.postimg.cc/7LtKbCzx/tnt-3-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tnt3"
+        },
+        {
+          "name": "TNT 4",
+          "logo": "https://i.postimg.cc/nVYQP8pT/tnt-4-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tnt4"
+        },
+        {
+          "name": "TNT 5",
+          "logo": "https://i.postimg.cc/d0K7jmMV/tnt-5-logo.png",
+          "externalUrl": "https://scoobysports.vercel.app/player/tnt5"
+        }
+      ]
+    }
+  ]
+}
