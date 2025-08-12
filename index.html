@@ -104,7 +104,6 @@
     </div>
 
     <script src="telegram.js"></script>
-    <script src="streams.js"></script>
     <script>
         // Global variables for tracking
         let isWatching = false;
@@ -225,74 +224,87 @@
             }
         }
 
-        // Load streams from streams.js
-        function loadStreams() {
-            // Load Live Matches
-            const liveMatchesContainer = document.getElementById('live-matches-container');
-            if (liveMatches && liveMatches.length > 0) {
-                liveMatches.forEach(match => {
-                    const matchElement = document.createElement('div');
-                    matchElement.className = 'match-item';
-                    matchElement.innerHTML = `
-                        <div class="match-logo">
-                            <img src="${match.logo}" alt="${match.name}" />
-                        </div>
-                        <div class="match-info">
-                            <h3>${match.name}</h3>
-                            <p>${match.description}</p>
-                            <span class="match-status">${match.status}</span>
-                        </div>
-                    `;
-                    matchElement.onclick = () => {
-                        if (trackExternalPlayer(match.name)) {
-                            window.open(match.externalUrl, '_blank');
-                        }
-                    };
-                    liveMatchesContainer.appendChild(matchElement);
-                });
-            } else {
-                document.getElementById('live-matches-section').style.display = 'none';
-            }
+        // Load streams from streams.json
+        async function loadStreams() {
+            try {
+                const response = await fetch('streams.json');
+                const data = await response.json();
+                
+                const { liveMatches, externalStreams } = data;
+                
+                // Load Live Matches
+                const liveMatchesContainer = document.getElementById('live-matches-container');
+                if (liveMatches && liveMatches.length > 0) {
+                    liveMatches.forEach(match => {
+                        const matchElement = document.createElement('div');
+                        matchElement.className = 'match-item';
+                        matchElement.innerHTML = `
+                            <div class="match-logo">
+                                <img src="${match.logo}" alt="${match.name}" />
+                            </div>
+                            <div class="match-info">
+                                <h3>${match.name}</h3>
+                                <p>${match.description}</p>
+                                <span class="match-status">${match.status}</span>
+                            </div>
+                        `;
+                        matchElement.onclick = () => {
+                            if (trackExternalPlayer(match.name)) {
+                                window.open(match.externalUrl, '_blank');
+                            }
+                        };
+                        liveMatchesContainer.appendChild(matchElement);
+                    });
+                } else {
+                    document.getElementById('live-matches-section').style.display = 'none';
+                }
 
-            // Load External Streams
-            const externalContainer = document.getElementById('external-streams-container');
-            externalStreams.forEach(category => {
-                const categorySection = document.createElement('div');
-                categorySection.className = 'category-section';
-                
-                const categoryTitle = document.createElement('h3');
-                categoryTitle.className = 'category-title';
-                categoryTitle.textContent = category.category;
-                categorySection.appendChild(categoryTitle);
-                
-                const streamsGrid = document.createElement('div');
-                streamsGrid.className = 'streams-grid';
-                
-                category.streams.forEach(stream => {
-                    const streamElement = document.createElement('div');
-                    streamElement.className = 'stream-item';
-                    streamElement.innerHTML = `
-                        <div class="stream-logo">
-                            <img src="${stream.logo}" alt="${stream.name}" />
-                        </div>
-                        <div class="stream-info">
-                            <h4>${stream.name}</h4>
-                            ${stream.note ? `<p class="stream-note">${stream.note}</p>` : ''}
-                        </div>
-                    `;
+                // Load External Streams
+                const externalContainer = document.getElementById('external-streams-container');
+                externalStreams.forEach(category => {
+                    const categorySection = document.createElement('div');
+                    categorySection.className = 'category-section';
                     
-                    streamElement.onclick = () => {
-                        if (trackExternalPlayer(stream.name)) {
-                            window.open(stream.externalUrl, '_blank');
-                        }
-                    };
+                    const categoryTitle = document.createElement('h3');
+                    categoryTitle.className = 'category-title';
+                    categoryTitle.textContent = category.category;
+                    categorySection.appendChild(categoryTitle);
                     
-                    streamsGrid.appendChild(streamElement);
+                    const streamsGrid = document.createElement('div');
+                    streamsGrid.className = 'streams-grid';
+                    
+                    category.streams.forEach(stream => {
+                        const streamElement = document.createElement('div');
+                        streamElement.className = 'stream-item';
+                        streamElement.innerHTML = `
+                            <div class="stream-logo">
+                                <img src="${stream.logo}" alt="${stream.name}" />
+                            </div>
+                            <div class="stream-info">
+                                <h4>${stream.name}</h4>
+                                ${stream.note ? `<p class="stream-note">${stream.note}</p>` : ''}
+                            </div>
+                        `;
+                        
+                        streamElement.onclick = () => {
+                            if (trackExternalPlayer(stream.name)) {
+                                window.open(stream.externalUrl, '_blank');
+                            }
+                        };
+                        
+                        streamsGrid.appendChild(streamElement);
+                    });
+                    
+                    categorySection.appendChild(streamsGrid);
+                    externalContainer.appendChild(categorySection);
                 });
                 
-                categorySection.appendChild(streamsGrid);
-                externalContainer.appendChild(categorySection);
-            });
+            } catch (error) {
+                console.error('Error loading streams:', error);
+                // Fallback: hide sections if JSON fails to load
+                document.getElementById('live-matches-section').style.display = 'none';
+                document.getElementById('external-streams-container').innerHTML = '<p style="text-align: center; color: #ff0000;">Error loading streams. Please refresh the page.</p>';
+            }
         }
 
         // Handle window visibility changes
